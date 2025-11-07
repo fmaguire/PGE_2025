@@ -1,6 +1,6 @@
 --- 
 title: "Pathogen Genomic Epidemiology 2025"
-author: "Faculty: Aaron Petkau, Emma Griffiths, William Hsiao, Finlay Maguire"
+author: "Faculty: Angela McLaughlin, Emma Griffiths, Finlay Maguire, Gary Van Domselaar, Idowu Olawoye, Jennifer Guthrie, Charlie Barclay,"
 date: "November 24-26, 2025"
 site: bookdown::bookdown_site
 documentclass: book
