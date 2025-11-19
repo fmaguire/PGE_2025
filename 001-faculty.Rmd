@@ -76,6 +76,16 @@ London, ON, Canada
 
 Dr. Jennifer Guthrie is a Canada Research Chair in Pathogen Genomics and Bioinformatics and Assistant Professor in the Departments of Microbiology & Immunology and Epidemiology & Biostatistics at Western University; she also serves as an Adjunct Scientist at Public Health Ontario. A genomic epidemiologist by training, in her research Dr. Guthrie uses interdisciplinary approaches combining principles from data science and bioinformatics, and more traditional epidemiology and microbiology methods to further our understanding of disease transmission dynamics, antimicrobial resistance, and epidemiological characteristics of pathogens. Her research involves pathogens of public health importance such as SARS-CoV-2, influenza, Mycobacterium tuberculosis, and methicillin resistant Staphylococcus aureus.
 
+#### Zhibin Lu
+
+<img src="./img/faculty/zhibin-lu.jpg" alt="Photo of Zhibin Lu" width="200"/>
+
+> Senior Manager, Digital Research <br> University Health Network
+> <br> Toronto, ON, Canada ---
+> [zhibin\@gmail.com](mailto:zhibin@gmail.com){.email}
+
+Zhibin Lu is a senior manager at University Health Network Digital. He is responsible for UHN HPC operations and scientific software. He manages two HPC clusters at UHN, including system administration, user management, and maintenance of bioinformatics tools for HPC4health. He is also skilled in Next-Gen sequence data analysis and has developed and maintained bioinformatics pipelines at the Bioinformatics and HPC Core. He is a member of the Digital Research Alliance of Canada Bioinformatics National Team and Scheduling National Team.
+
 #### Charlie Barclay
 
 <img src="./img/faculty/charlie-barclay.jpg" width="200" alt="Photo of Charlie Barclay">

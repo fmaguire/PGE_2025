@@ -10,6 +10,7 @@ finlay-maguire
 gary-van-domselaar
 idowu-olawoye
 jennifer-guthrie
+zhibin-lu
 charlie-barclay
 data-and-compute-setup
 course-data-downloads
@@ -45,6 +46,13 @@ superimposing-genomic-cluster-information-onto-dendrograms
 module-4-outbreak-analysis
 lecture-3
 lab-3
+background
+set-up
+data
+activate-environment
+find-your-ip-address
+cluster-identification
+snp-analysis
 module-5-phylodynamics
 lecture-4
 lab-4
