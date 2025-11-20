@@ -21,6 +21,16 @@ lab
 module-2-emerging-pathogen-detection-and-identification
 lecture-1
 lab-1
+copy-data-files
+activate-environment
+verify-your-workshop-machine-url
+examine-output
+step-2-questions
+examine-kraken_report.txt
+examine-kraken_out.txt
+step-5-questions
+step-7-questions
+step-8-questions
 module-3-pathogen-typing
 lecture-2
 lab-2
@@ -49,7 +59,7 @@ lab-3
 background
 set-up
 data
-activate-environment
+activate-environment-1
 find-your-ip-address
 cluster-identification
 snp-analysis

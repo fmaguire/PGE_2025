@@ -142,12 +142,12 @@
 \urlstyle{same}
 \hypersetup{
   pdftitle={Pathogen Genomic Epidemiology 2025},
-  pdfauthor={Faculty: Angela McLaughlin, Emma Griffiths, Finlay Maguire, Gary Van Domselaar, Idowu Olawoye, Jennifer Guthrie, Charlie Barclay,},
+  pdfauthor={Faculty: Angela McLaughlin, Emma Griffiths, Finlay Maguire, Gary Van Domselaar, Idowu Olawoye, Jennifer Guthrie, Zhibin Lu, Charlie Barclay,},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 
 \title{Pathogen Genomic Epidemiology 2025}
-\author{Faculty: Angela McLaughlin, Emma Griffiths, Finlay Maguire, Gary Van Domselaar, Idowu Olawoye, Jennifer Guthrie, Charlie Barclay,}
+\author{Faculty: Angela McLaughlin, Emma Griffiths, Finlay Maguire, Gary Van Domselaar, Idowu Olawoye, Jennifer Guthrie, Zhibin Lu, Charlie Barclay,}
 \date{November 24-26, 2025}
 
 \begin{document}
@@ -288,6 +288,711 @@ Coming soon!
 \section{Lecture}\label{lecture-1}
 
 \section{Lab}\label{lab-1}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \hyperref[intro]{Introduction}
+\item
+  \hyperref[software]{Software}\\
+\item
+  \hyperref[setup]{Setup}
+\item
+  \hyperref[exercise]{Exercise}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    \hyperref[exercise-background]{Patient Background}
+  \item
+    \hyperref[exercise-overview]{Overview}
+  \item
+    \hyperref[assembly-free]{Assembly-free approach}
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      \hyperref[exercise-examine-reads]{Step 1: Examine the reads}
+    \item
+      \hyperref[exercise-quality-reads]{Step 2: Clean and examine quality of the reads}
+    \item
+      \hyperref[exercise-host-filtering]{Step 3: Host read filtering}
+    \item
+      \hyperref[exercise-classify-kraken]{Step 4: Classify reads using Kraken2 database}
+    \item
+      \hyperref[exercise-pavian]{Step 5: Generate an interactive html-based report using Pavian}
+    \end{enumerate}
+  \item
+    \hyperref[assembly-based]{Assembly-based approach}
+
+    \begin{enumerate}
+    \def\labelenumiii{\arabic{enumiii}.}
+    \tightlist
+    \item
+      \hyperref[exercise-metatranscriptomic-assembly]{Step 6: Metatranscriptomic assembly}
+    \item
+      \hyperref[exercise-evaluate-assembly]{Step 7: Evaluate assembly with Quast}
+    \item
+      \hyperref[exercise-blast]{Step 8: Using BLAST to look for existing organisms}
+    \end{enumerate}
+  \end{enumerate}
+\item
+  \hyperref[final]{Final words}
+\end{enumerate}
+
+\#\#\# 1. Introduction
+
+This tutorial aims to introduce a variety of software and concepts related to detecting emerging pathogens from a complex host sample. The provided data and methods are derived from real-world data, but have been modified to either illustrate a specific learning objective or to reduce the complexity of the problem. Contamination and a lack of large and accurate databases render detection of microbial pathogens difficult. As a disclaimer, all results produced from the tools described in this tutorial and others must also be verified with supplementary bioinformatics or wet-laboratory techniques.
+
+\#\#\# 2. List of software for tutorial and its respective documentation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/OpenGene/fastp}{fastp}
+\item
+  \href{https://multiqc.info/}{multiqc}
+\item
+  \href{https://kat.readthedocs.io/en/latest/}{KAT}
+\item
+  \href{https://ccb.jhu.edu/software/kraken2/}{Kraken2}
+\item
+  \href{https://fbreitwieser.shinyapps.io/pavian/}{Pavian}
+\item
+  \href{https://github.com/voutcn/megahit}{MEGAHIT}
+\item
+  \href{http://quast.sourceforge.net/quast}{Quast}
+\item
+  \href{https://blast.ncbi.nlm.nih.gov/Blast.cgi}{NCBI blast}
+\end{itemize}
+
+The workshop machines already have this software installed within a conda environment, but to perform this analysis later on, you can make use of the conda environment located at \url{environment.yml} to install the necessary software.
+
+\#\#\# 3. Exercise setup
+
+\subsection{3.1. Copy data files}\label{copy-data-files}
+
+To begin, we will copy over the exercises to \texttt{\textasciitilde{}/workspace}. This let's use view the resulting output files in a web browser.
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cp} \AttributeTok{{-}r}\NormalTok{ \textasciitilde{}/CourseData/module2/module2\_workspace/ \textasciitilde{}/workspace/}
+\BuiltInTok{cd}\NormalTok{ \textasciitilde{}/workspace/module2\_workspace/analysis}
+\end{Highlighting}
+\end{Shaded}
+
+When you are finished with these steps you should be inside the directory \texttt{/home/ubuntu/workspace/module2\_workspace/analysis}. You can verify this by running the command \texttt{pwd}.
+
+\textbf{Output after running \texttt{pwd}}
+
+\begin{verbatim}
+/home/ubuntu/workspace/module2_workspace/analysis
+\end{verbatim}
+
+You should also have a directory like \texttt{data/} one directory up from here. To check this, you can run \texttt{ls\ ../}:
+
+\textbf{Output after running \texttt{ls\ ../}}
+
+\begin{verbatim}
+analysis  data  precomputed-analysis
+\end{verbatim}
+
+\subsection{3.2. Activate environment}\label{activate-environment}
+
+Next we will activate the \href{https://docs.conda.io/en/latest/}{conda} environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{conda}\NormalTok{ activate module2{-}emerging{-}pathogen}
+\end{Highlighting}
+\end{Shaded}
+
+You should see the command-prompt (where you type commands) switch to include \texttt{(module2-emerging-pathogen)} at the beginning, showing you are inside this environment. You should also be able to run one of the commands like \texttt{kraken2\ -\/-version} and see output:
+
+\textbf{Output after running \texttt{kraken2\ -\/-version}}
+
+\begin{verbatim}
+Kraken version 2.17.1
+Copyright 2013-2023, Derrick Wood (dwood@cs.jhu.edu)
+\end{verbatim}
+
+\subsection{3.3. Verify your workshop machine URL}\label{verify-your-workshop-machine-url}
+
+This exercise will produce output files intended to be viewed in a web browser. These should be accessible by going to \url{http://xx.uhn-hpc.ca} in your web browser where \textbf{xx} is your particular number (like 01, 02, etc). If you are able to view a list of files and directories, try clicking the link for \textbf{module2\_workspace}. This page will be referred to later to view some of our output files. In addition, the link \textbf{precompuated-analysis} will contain all the files we will generate during this lab.
+
+\#\#\# 4. Exercise
+
+\#\#\# 4.1. Patient Background:
+
+A 41-year-old man was admitted to a hospital 6 days after the onset of disease. He reported fever, chest tightness, unproductive cough, pain and weakness. Preliminary investigations excluded the presence of influenza virus, \emph{Chlamydia pneumoniae}, \emph{Mycoplasma pneumoniae}, and other common respiratory pathogens. After 3 days of treatment the patient was admitted to the intensive care unit, and 6 days following admission the patient was transferred to another hospital.
+
+To further investigate the cause of illness, a sample of bronchoalveolar lavage fluid (BALF) was collected from the patient and metatranscriptomic sequencing was performed (that is, the RNA from the sample was sequenced). In this lab, you will examine the metatranscriptomic data using a number of bioinformatics methods and tools to attempt to identify the cause of the illness.
+
+\emph{Note: The patient information and data was derived from a real study (shown at the end of the lab).}
+
+\#\#\# 4.2. Overview
+
+We will proceed through the following steps to attempt to diagnose the situation.
+
+\begin{itemize}
+\tightlist
+\item
+  Trim and clean sequence reads using \texttt{fastp}
+\item
+  Filter host (human) reads with \texttt{kat}
+\item
+  Run Kraken2 with a bacterial and viral database to look at the taxonomic makeup of the reads.
+\item
+  Assemble the metatranscriptome with \texttt{megahit}
+\item
+  Examine assembly quality using \texttt{quast} and possible pathogens with \texttt{blast}
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\# Assembly-free approach
+
+The first set of steps follows through an assembly-free approach where we will perform taxonomic classification of the reads without constructing a metagenomics assembly.
+
+\#\#\#\# Step 1: Examine the reads
+
+Let's first take a moment to examine the reads from the metatranscrimptomic sequencing. Note that for metatranscriptomic sequencing, while we are sequencing the RNA, this was performed by first generating complementary DNA (cDNA) to the RNA and sequencing the cDNA. Hence you will see thymine (T) instead of uracil (U) in the sequence data.
+
+The reads were generated from paired-end sequencing, which means that a particular fragment (of cDNA) was sequenced twice--once from either end (see the \href{https://www.illumina.com/science/technology/next-generation-sequencing/plan-experiments/paired-end-vs-single-read.html}{Illumina Paired vs.~Single-End Reads} for some additional details). These pairs of cDNA sequence reads are stored as separate files (named \texttt{emerging-pathogen-reads\_1.fastq.gz} and \texttt{emerging-pathogen-reads\_2.fastq.gz}). You can see each file by running \texttt{ls}:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{ ../data}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Output}
+
+\begin{verbatim}
+emerging-pathogen-reads_1.fastq.gz  emerging-pathogen-reads_2.fastq.gz
+\end{verbatim}
+
+We can look at the contents of one of the files by running \texttt{less} (you can look at the other pair of reads too, but it will look very similar):
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{less}\NormalTok{ ../data/emerging{-}pathogen{-}reads\_1.fastq.gz}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Output}
+
+\begin{verbatim}
+@SRR10971381.5 5 length=151
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.7 7 length=151
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.33 33 length=115
+NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
++
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+@SRR10971381.56 56 length=151
+CCCGTGTTCGATTGGCATTTCACCCCTATCCACAACTCATCCCAAAGCTTTTCAACGCTCACGAGTTCGGTCCTCCACACAATTTTACCTGTGCTTCAACCTGGCCATGGATAGATCACTACGGTTTCGGGTCTACTATTACTAACTGAAC
++
+FFFFFFFAFFFFFFAFFFFFF6FFFFFFFFF/FFFFFFFFFFFF/FFFFFFFFFFFFFFFFFAFFFFFFFFFFFAFFFFF/FFAF/FAFFFFFFFFFAFFFF/FFFFFFFFFFF/F=FF/FFFFA6FAFFFFF//FFAFFFFFFAFFFFFF
+\end{verbatim}
+
+These reads are in the \href{https://en.wikipedia.org/wiki/FASTQ_format}{FASTQ}, which stores a single read as a block of 4 lines: \textbf{identifier}, \textbf{sequence}, \textbf{+ (separator)}, \textbf{quality scores}. In this file, we can see a lot of lines with \texttt{NNN...} for the sequence letters, which means that these portions of the read are not determined. We will remove some of these undetermined (and uninformative) reads in the next step.
+
+\#\#\#\# Step 2: Clean and examine quality of the reads
+
+As we saw from looking at the data, reads that come directly off of a sequencer may be of variable quality which might impact the downstream analysis. We will use the software \href{https://github.com/OpenGene/fastp}{fastp} to both clean and trim reads (removing poor-quality reads or sequencing adapters) as well as examine the quality of the reads. To do this please run the following (the expected time of this command is shown as \texttt{\#\ Time:\ 30\ seconds}).
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 30 seconds}
+\ExtensionTok{fastp} \AttributeTok{{-}{-}detect\_adapter\_for\_pe} \AttributeTok{{-}{-}in1}\NormalTok{ ../data/emerging{-}pathogen{-}reads\_1.fastq.gz }\AttributeTok{{-}{-}in2}\NormalTok{ ../data/emerging{-}pathogen{-}reads\_2.fastq.gz }\AttributeTok{{-}{-}out1}\NormalTok{ cleaned\_1.fastq }\AttributeTok{{-}{-}out2}\NormalTok{ cleaned\_2.fastq}
+\end{Highlighting}
+\end{Shaded}
+
+You should see the following as output:
+
+\textbf{Output}
+
+\begin{verbatim}
+Detecting adapter sequence for read1...
+No adapter detected for read1
+
+Detecting adapter sequence for read2...
+No adapter detected for read2
+[...]
+Insert size peak (evaluated by paired-end reads): 150
+
+JSON report: fastp.json
+HTML report: fastp.html
+
+fastp --detect_adapter_for_pe --in1 ../data/emerging-pathogen-reads_1.fastq.gz --in2 ../data/emerging-pathogen-reads_2.fastq.gz --out1 cleaned_1.fastq --out2 cleaned_2.fastq
+fastp v0.24.0, time used: 17 seconds
+\end{verbatim}
+
+\subsubsection{Examine output}\label{examine-output}
+
+You should now be able to nagivate to \textless{} \url{http://xx.uhn-hpc.ca/module2_workspace/analysis}\textgreater{} and see some of the output files. In particular, you should be able to find \textbf{fastp.html}, which contains a report of the quality of the reads and how many were removed. Please take a look at this report now:
+
+This should show an overview of the quality of the reads before and after filtering with \texttt{fastp}. Using this report, please answer the following questions.
+
+\subsubsection{Step 2: Questions}\label{step-2-questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Looking at the \textbf{Filtering result} section, how many reads \textbf{passed filters}? How many were removed due to \textbf{low quality}? How many were removed due to \textbf{too many N}?
+\item
+  Looking at the \textbf{Adapters} section, were there many adapters that needed to be trimmed in this data?
+\item
+  Compare the \textbf{quality} and \textbf{base contents} plots \textbf{Before filtering} and \textbf{After filtering}? How do they differ?
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\#\# Step 3: Host read filtering
+
+The next step is to remove any host reads (in this case Human reads) from our dataset as we are not focused on examining host reads. There are several different tools that can be used to filter out host reads such as Bowtie2 or KAT. In this demonstration, we have selected to run KAT followed by Kraken2, but you could likely accomplish something similar by using Bowtie2 followed by Kraken2.
+
+Command documentation is available \href{http://kat.readthedocs.io/en/latest/using.html\#sequence-filtering}{here}
+
+KAT works by breaking down each read into small fragements of length \emph{k}, k-mers, and compares them to a k-mer database of the human reference genome. Subsequently, the complete read is either assigned into a matched or unmatched (filtered) file if 10\% of the k-mers in the read have been found in the human database.
+
+Let's run KAT now.
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 3 minutes}
+\ExtensionTok{kat}\NormalTok{ filter seq }\AttributeTok{{-}t}\NormalTok{ 4 }\AttributeTok{{-}i} \AttributeTok{{-}o}\NormalTok{ filtered }\AttributeTok{{-}{-}seq}\NormalTok{ cleaned\_1.fastq }\AttributeTok{{-}{-}seq2}\NormalTok{ cleaned\_2.fastq \textasciitilde{}/CourseData/module2/db/kat\_db/human\_kmers.jf}
+\end{Highlighting}
+\end{Shaded}
+
+The arguments for this command are:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{filter\ seq}: Specifies that we are running a specific subcommand to \textbf{filter sequences}.
+\item
+  \texttt{-t\ 4}: The number of threads to use (we have 4 CPU cores on these machines so we are using 4 threads).
+\item
+  \texttt{-\/-seq\ -\/-seq2} arguments to provide corresponding forward and reverse fastq reads (the cleaned reads from \texttt{fastp})
+\item
+  \texttt{-i}: Inverts the filter, that is we wish to output sequences \textbf{not found} in the human kmer database to a file.
+\item
+  \texttt{-o\ filtered} Provide prefix for all files generated by the command. In our case, we will have two output files \textbf{filtered.in.R1.fastq} and \textbf{filetered.in.R2.fastq}.
+\item
+  \texttt{\textasciitilde{}/CourseData/module2/db/kat\_db/human\_kmers.jf} the human k-mer database we're using made with jellyfish.
+\end{itemize}
+
+As the command is running you should see the following output on your screen:
+
+\textbf{Output}
+
+\begin{verbatim}
+Kmer Analysis Toolkit (KAT) V2.4.2
+
+Running KAT in filter sequence mode
+-----------------------------------
+
+Loading hashes into memory... done.  Time taken: 40.7s
+
+Filtering sequences ...
+Processed 100000 pairs
+Processed 200000 pairs
+[...]
+Finished filtering.  Time taken: 130.5s
+
+Found 1127908 / 1306231 to keep
+
+KAT filter seq completed.
+Total runtime: 182.8s
+\end{verbatim}
+
+If the command was successful, your current directory should contain two new files:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{filtered.in.R1.fastq}
+\item
+  \texttt{filtered.in.R2.fastq}
+\end{itemize}
+
+These are the set of reads minus any reads that matched the human genome. The message \texttt{Found\ 1127908\ /\ 1306231\ to\ keep} tells us how many read-pairs were kept (the number in the \texttt{filtered.in.*.fastq} files) vs.~the total number of read-pairs.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\#\# Step 4: Classify reads using Kraken2 database
+
+Now that we have most, if not all, host reads filtered out, it's time to classify the remaining reads to identify the likely taxonomic category they belong to.
+
+Database selection is one of the most crucial parts of running Kraken. One of the many factors that must be considered is the computational resources available. Our current AWS image for the course has only 16G of memory. A major disadvantage of Kraken2 is that it loads the entire database into memory. With the \href{https://benlangmead.github.io/aws-indexes/k2}{standard viral, bacterial, and archael database} on the order of 50 GB we would be unable to run the full database on the course machine. To help mitigate this, Kraken2 allows reduced databases to be constructed, which will still give reasonable results but we may end up with more reads unclassified or classified at a higher taxonomic rank. We have constructed our own smaller Kraken2 database using only bacterial, human, and viral data. We will be using this database.
+
+Lets run the following command in our current directory to classify our reads against the Kraken2 database.
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 1 minute}
+\ExtensionTok{kraken2} \AttributeTok{{-}{-}db}\NormalTok{ \textasciitilde{}/CourseData/module2/db/kraken2\_db }\AttributeTok{{-}{-}threads}\NormalTok{ 4 }\AttributeTok{{-}{-}paired} \AttributeTok{{-}{-}output}\NormalTok{ kraken\_out.txt }\AttributeTok{{-}{-}report}\NormalTok{ kraken\_report.txt }\AttributeTok{{-}{-}unclassified{-}out}\NormalTok{ kraken2\_unclassified\#.fastq filtered.in.R1.fastq filtered.in.R2.fastq}
+\end{Highlighting}
+\end{Shaded}
+
+This should produce output similar to below:
+
+\textbf{Output}
+
+\begin{verbatim}
+Loading database information... done.
+1127908 sequences (315.54 Mbp) processed in 5.332s (12693.3 Kseq/m, 3551.00 Mbp/m).
+  880599 sequences classified (78.07%)
+  247309 sequences unclassified (21.93%)
+\end{verbatim}
+
+\subsubsection{\texorpdfstring{Examine \texttt{kraken\_report.txt}}{Examine kraken\_report.txt}}\label{examine-kraken_report.txt}
+
+Let's examine the text-based report of Kraken2:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{less}\NormalTok{ kraken\_report.txt}
+\end{Highlighting}
+\end{Shaded}
+
+This should produce output similar to the following:
+
+\begin{verbatim}
+ 21.93  247309  247309  U       0       unclassified
+ 78.07  880599  30      R       1       root
+ 78.01  879899  124     R1      131567    cellular organisms
+ 76.37  861411  19285   D       2           Bacteria
+ 56.53  637572  2       D1      1783270       FCB group
+ 56.53  637558  1571    D2      68336           Bacteroidetes/Chlorobi group
+ 56.39  635982  1901    P       976               Bacteroidetes
+ 55.10  621496  35      C       200643              Bacteroidia
+ 55.09  621417  19584   O       171549                Bacteroidales
+ 53.18  599872  2464    F       171552                  Prevotellaceae
+ 52.96  597396  397538  G       838                       Prevotella
+  4.74  53473   53473   S       28137                       Prevotella veroralis
+  4.34  48940   48940   S       1177574                     Prevotella jejuni
+  2.56  28880   470     G1      2638335                     unclassified Prevotella
+\end{verbatim}
+
+This will show the top taxonomic ranks (right-most column) as well as the percent and number of reads that fall into these categories (left-most columns). For example:
+
+\begin{itemize}
+\tightlist
+\item
+  The very first row \texttt{21.93\ \ 247309\ \ 247309\ \ U\ \ \ \ \ \ \ 0\ \ \ \ \ \ \ unclassified} shows us that \textbf{247309 (21.93\%)} of the reads processed by Kraken2 are unclassified (remember we only used a database containing bacterial, viral, and human representatives).
+\item
+  The 4th line \texttt{76.37\ \ 861411\ \ 19285\ \ \ D\ \ \ \ \ \ \ 2\ \ \ \ \ \ \ \ \ \ \ Bacteria} tells us that \textbf{861411 (76.37\%)} of our reads fall into the \textbf{Bacteria} domain (the \texttt{D} in the fourth column is the taxonomic rank, \textbf{\texttt{D}omain}). The number \texttt{19285} tells us that \texttt{19285} of the reads are assigned directly to the \textbf{Bacteria} domain but cannot be assigned to any lower taxonomic rank (they match with too many diverse types of bacteria).
+\end{itemize}
+
+More details about how to read this report can be found at \url{https://github.com/DerrickWood/kraken2/wiki/Manual\#sample-report-output-format}. In the next step we will represent this data visually as a multi-layered pie chart.
+
+\subsubsection{\texorpdfstring{Examine \texttt{kraken\_out.txt}}{Examine kraken\_out.txt}}\label{examine-kraken_out.txt}
+
+Let's also take a look at \texttt{kraken\_out.txt}. This file contains the kraken2 results, but divided up into a classification for every read.
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{column} \AttributeTok{{-}s}\StringTok{$\textquotesingle{}}\DataTypeTok{\textbackslash{}t}\StringTok{\textquotesingle{}} \AttributeTok{{-}t}\NormalTok{ kraken\_out.txt }\KeywordTok{|} \FunctionTok{less} \AttributeTok{{-}S}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{column} formats a text file (\texttt{kraken\_out.txt}) into multiple columns according to a tab delimiter character (flag \texttt{-s\textquotesingle{}\$\textbackslash{}t\textquotesingle{}}) and produces a table (flag \texttt{-t}).
+
+\textbf{Output}
+
+\begin{verbatim}
+C       SRR10971381.56  29465   151|151 0:40 909932:2 0:8 909932:2 0:20 29465:4 0:7 178327>
+C       SRR10971381.97  838     122|122 0:44 2:5 0:23 838:1 0:10 838:2 0:3 |:| 0:3 838:2 0>
+C       SRR10971381.126 9606    109|109 0:2 9606:5 0:7 9606:1 0:12 9606:1 0:47 |:| 0:47 96>
+C       SRR10971381.135 838     151|151 0:95 838:3 0:19 |:| 0:15 838:1 0:12 838:5 0:6 838:>
+C       SRR10971381.219 1177574 151|151 0:11 838:3 0:5 838:2 0:9 838:5 0:11 838:1 976:5 83>
+C       SRR10971381.223 838     151|151 0:117 |:| 0:61 838:4 0:40 838:1 0:11
+[...]
+\end{verbatim}
+
+This shows us a taxonomic classification for every read (one read per line). For example:
+
+\begin{itemize}
+\tightlist
+\item
+  On the first line, \texttt{C\ \ SRR10971381.56\ \ \ \ \ \ \ \ 29465} tells us that this read with identifier \texttt{SRR10971381.56} is classified \texttt{C} (matches to something in the Kraken2 database) and matches to the taxonomic category \texttt{29465}, which is the NCBI taxonomy identifer. In this case \texttt{29465} corresponds to the \href{https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?mode=Info&id=29465&lvl=3&lin=f&keep=1&srchmode=1&unlock}{\emph{Veillonella}}.
+\end{itemize}
+
+More information on interpreting this file can be found at \url{https://github.com/DerrickWood/kraken2/wiki/Manual\#standard-kraken-output-format}.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\#\# Step 5: Generate an interactive html-based report using Pavian
+
+Instead of reading text-based files like above, we can visualize this information using \href{https://fbreitwieser.shinyapps.io/pavian/}{Pavian}, which can be used to construct an interactive summary and visualization of metagenomics data. Pavian supports a number of metagenomics analysis software outputs, including Kraken/Kraken2. To visualize the Kraken2 output we just generated, we can upload the \texttt{kraken\_report.txt} file to the web application. Please do this now using the following steps:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Download the \texttt{kraken\_report.txt} to your local machine from \url{http://xx.uhn-hpc.ca/module2_workspace/analysis} (you can right-click and select \textbf{Save as\ldots{}} on the file).
+\item
+  Visit the \href{https://fbreitwieser.shinyapps.io/pavian/}{Pavian} website and click on \textbf{Upload files \textgreater{} Browse\ldots{}} and select the file \texttt{kraken\_report.txt} we just downloaded.
+\item
+  Select \textbf{Generate HTML report \ldots{}} to generate the Pavian report.
+\item
+  Open the generated report HTML file in your web browser.
+\end{enumerate}
+
+If all the steps are completed successfully then the report you should see should look like the following:
+
+\subsubsection{Step 5: Questions}\label{step-5-questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What are the percentages of \textbf{Unclassified}, \textbf{Microbial}, \textbf{Bacterial}, \textbf{Viral}, \textbf{Fungal}, and \textbf{Protozoan} reads in this dataset?
+\item
+  Scroll down to the \textbf{Classification results} section of the report and flip through the \textbf{Bacteria}, \textbf{Viruses}, and \textbf{Eukaryotes} tabs. What is the top organism in each of these three categories and how many reads?
+\item
+  This data was derived from RNA (instead of DNA) and some viruses are RNA-based. If we focus in on the \textbf{Viruses} category, is there anything here that could be consistent with the patient's symptoms?
+\item
+  Given the results of Pavian, can you form a hypothesis as to the cause of the patient's symptoms?
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\# Assembly-based approach
+
+\#\#\#\# Step 6: Metatranscriptomic assembly
+
+In order to investigate the data further we will assemble the metatranscriptome using the software \href{https://github.com/voutcn/megahit}{MEGAHIT}. What this will do is integrate all the read data together to attempt to produce the longest set of contiguous sequences possible (contigs). To do this please run the following:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 6 minutes}
+\ExtensionTok{megahit} \AttributeTok{{-}t}\NormalTok{ 4 }\AttributeTok{{-}1}\NormalTok{ filtered.in.R1.fastq }\AttributeTok{{-}2}\NormalTok{ filtered.in.R2.fastq }\AttributeTok{{-}o}\NormalTok{ megahit\_out}
+\end{Highlighting}
+\end{Shaded}
+
+If everything is working you should expect to see the following as output:
+
+\textbf{Output}
+
+\begin{verbatim}
+2025-11-19 15:45:30 - MEGAHIT v1.2.9
+2025-11-19 15:45:30 - Using megahit_core with POPCNT and BMI2 support
+2025-11-19 15:45:30 - Convert reads to binary library
+2025-11-19 15:45:31 - b'INFO  sequence/io/sequence_lib.cpp  :   75 - Lib 0 (/media/cbwdata/workspace/module2_workspace/analysis/filtered.in.R1.fastq,/media/cbwdata/workspace/module2_workspace/analysis/filtered.in.R2.fastq): pe, 2255816 reads, 151 max length'
+2025-11-19 15:45:32 - b'INFO  utils/utils.h                 :  152 - Real: 1.3294\tuser: 1.2124\tsys: 0.3011\tmaxrss: 166748'
+2025-11-19 15:45:32 - k-max reset to: 141
+2025-11-19 15:45:32 - Start assembly. Number of CPU threads 4
+2025-11-19 15:45:32 - k list: 21,29,39,59,79,99,119,141
+2025-11-19 15:45:32 - Memory used: 14741121024
+2025-11-19 15:45:32 - Extract solid (k+1)-mers for k = 21
+
+[...]
+
+2025-11-19 15:49:08 - Assemble contigs from SdBG for k = 141
+2025-11-19 15:49:09 - Merging to output final contigs
+2025-11-19 15:49:09 - 3112 contigs, total 1536607 bp, min 203 bp, max 29867 bp, avg 493 bp, N50 463 bp
+2025-11-19 15:49:09 - ALL DONE. Time elapsed: 218.408143 seconds
+\end{verbatim}
+
+Once everything is completed, you will have a directory \texttt{megahit\_out/} with the output. Let's take a look at this now:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{ megahit\_out/}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Output}
+
+\begin{verbatim}
+checkpoints.txt  done  final.contigs.fa  intermediate_contigs  log  options.json
+\end{verbatim}
+
+It's specifically the \textbf{final.contigs.fa} file that contains our metatranscriptome assembly. This will contain the largest \emph{contiguous} sequences MEGAHIT was able to construct from the sequence reads. We can look at the contents with the command \texttt{head} (\texttt{head} prints the first 10 lines of a file):
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{ megahit\_out/final.contigs.fa}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Output}
+
+\begin{verbatim}
+>k141_0 flag=1 multi=3.0000 len=312
+ATACTGATCTTAGAAAGCTTAGATTTCATCTTTTCAATTGGTGTATCGAATTTAGATACAAATTTAGCTAAGGATTTAGACATTTCAGCTTTATCTACAGTAGAGTATACTTTAATATCTTGAAGTACACCAGTTACTTTAGACTTAATCAAAATTTTACCCAAATCATTAACTAGATCTTTAGAATCAGAATTCTTTTCTACCATTTTAGCGATGATATCTGTTGCATCTTGATCTTCAAATGAAGATCTATATGACATGATAGTTTGACCTTCTTGTAGTTGAGATCCAACTTCTAAACATTCGATGTCT
+>k141_785 flag=1 multi=6.0000 len=355
+TATAGAGATAGGTGATAAGGTTTTCCTAGGCGCACAATCAGGTGTACCTGGAAGTTTGAAGGCTAATCAACAACTGATTGGTACACCTCCAATGGAGCAACGCTCTTACTTTAAGTCGCAAGCCATCTTCCGCAGACTGCCTGAGATGTACAAGCAACTAAGCGACTTGCAGAAAGAAATAGACCAATTGAAAAAGAACAGATAACATTCATGGATACAATAAAACAGAAGACATTAAAAGGGAGTTTCTCGCTCTTTGGCAAGGGACTTCACACAGGTTTGAGTCTTACCGTGACGTTTAATCCGGCTCCAGAGAATACTGGCTATAAGATACAACGTATAGATCTTGAGGGGC
+[...]
+\end{verbatim}
+
+It can be a bit difficult to get an overall idea of what is in this file, so in the next step we will use the software \href{http://quast.sourceforge.net/quast}{Quast} to summarize the assembly information.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\#\# Step 7: Evaluate assembly with Quast
+
+\href{http://quast.sourceforge.net/quast}{Quast} can be used to provide summary statistics on the output of assembly software. Quast will take as input an assembled genome or metagenome (a FASTA file of different sequences) and will produce HTML and PDF reports. We will run Quast on our data by running the following command:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 2 seconds}
+\ExtensionTok{quast} \AttributeTok{{-}t}\NormalTok{ 4 megahit\_out/final.contigs.fa}
+\end{Highlighting}
+\end{Shaded}
+
+You should expect to see the following as output:
+
+\textbf{Output}
+
+\begin{verbatim}
+/home/ubuntu/.conda/envs/module2-emerging-pathogen/bin/quast -t 4 megahit_out/final.contigs.fa
+
+Version: 5.3.0
+
+System information:
+  OS: Linux-6.14.0-1016-aws-x86_64-with-glibc2.39 (linux_64)
+  Python version: 3.9.23
+  CPUs number: 4
+
+Started: 2025-11-19 15:50:27
+
+[...]
+
+Finished: 2025-11-19 15:50:28
+Elapsed time: 0:00:01.273336
+NOTICEs: 1; WARNINGs: 0; non-fatal ERRORs: 0
+
+Thank you for using QUAST!
+\end{verbatim}
+
+Quast writes it's output to a directory \texttt{quast\_results/}, which includes HTML and PDF reports. We can view this using a web browser by navigating to \url{http://xx.uhn-hpc.ca/module2_workspace/analysis/} and clicking on \textbf{quast\_results} then \textbf{latest} then \textbf{icarus.html}. From here, click on \textbf{Contig size viewer}. You should see the following:
+
+This shows the length of each contig in the \texttt{megahit\_out/final.contigs.fa} file, sorted by size.
+
+(If it is having issues you can also see the needed information in the \texttt{pdf} report)
+
+\subsubsection{Step 7: Questions}\label{step-7-questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  What is the length of the largest contig in the genome? How does it compare to the length of the 2nd and 3rd largest contigs?
+\item
+  Given that this is RNASeq data (i.e., sequences derived from RNA), what is the most common type of RNA you should expect to find? What are the approximate lengths of these RNA fragments? Is the largest contig an outlier (i.e., is it much longer than you would expect)?
+\item
+  Is there another type of source for this RNA fragment that could explain it's length? Possibly a \href{https://en.wikipedia.org/wiki/Coronavirus\#Genome}{Virus}?
+\item
+  Also try looking at the QUAST report (\url{http://xx.uhn-hpc.ca/module2_workspace/analysis/quast_results/latest/} then clicking on \textbf{report.html}). How many contigs \textgreater= 1000 bp are there compared to the number \textless{} 1000 bp?
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\#\# Step 8: Use BLAST to look for existing organisms
+
+In order to get a better handle on what the identity of the largest contigs could be, let's use \href{https://blast.ncbi.nlm.nih.gov/Blast.cgi}{BLAST} to compare to a database of existing viruses. Please run the following:
+
+\textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Time: 1 second}
+\ExtensionTok{seqkit}\NormalTok{ sort }\AttributeTok{{-}{-}by{-}length} \AttributeTok{{-}{-}reverse}\NormalTok{ megahit\_out/final.contigs.fa }\KeywordTok{|} \ExtensionTok{seqkit}\NormalTok{ head }\AttributeTok{{-}n}\NormalTok{ 50 }\OperatorTok{\textgreater{}}\NormalTok{ contigs{-}50.fa}
+\ExtensionTok{blastn} \AttributeTok{{-}db}\NormalTok{ \textasciitilde{}/CourseData/module2/db/blast\_db/ref\_viruses\_rep\_genomes\_modified }\AttributeTok{{-}query}\NormalTok{ contigs{-}50.fa }\AttributeTok{{-}html} \AttributeTok{{-}out}\NormalTok{ blast\_results.html}
+\end{Highlighting}
+\end{Shaded}
+
+As output you should see something like (\texttt{blastn} won't print any output):
+
+\textbf{Output}
+
+\begin{verbatim}
+[INFO] read sequences ...
+[INFO] 3112 sequences loaded
+[INFO] sorting ...
+[INFO] output ...
+\end{verbatim}
+
+Here, we first use \href{https://bioinf.shenwei.me/seqkit/}{seqkit} to sort all contigs by length with the largest ones first (\texttt{seqkit\ sort\ -\/-by-length\ -\/-reverse\ ...}) and we then extract only the top \textbf{50} longest contigs (\texttt{seqkit\ head\ -n\ 50}) and write these to a file \textbf{contigs-50.fa} (\texttt{\textgreater{}\ contigs-50.fa}).
+
+\emph{Note that the pipe \texttt{\textbar{}} character will take the output of one command (\texttt{seqkit\ sort\ -\/-by-length\ ...}, which sorts sequences in the file by length) and forward it into the input of another command (\texttt{seqkit\ head\ -n\ 50}, which takes only the first 50 sequences from the file). The greater-than symbol \texttt{\textgreater{}} takes the output of one command \texttt{seqkit\ head\ ...} and writes it to a file (named \texttt{contigs-50.fa}).}
+
+The next command will run \href{https://blast.ncbi.nlm.nih.gov/Blast.cgi}{BLAST} on these top 50 longest contigs using a pre-computed database of viral genomes (\texttt{blastn\ -db\ \textasciitilde{}/CourseData/module2/db/blast\_db/ref\_viruses\_rep\_genomes\_modified\ -query\ contigs-50.fa\ ...}). The \texttt{-html\ -out\ blast\_results.html} tells BLAST to write its results as an HTML file.
+
+To view these results, please browse to \url{http://xx.uhn-hpc.ca/module2_workspace/analysis/blast_results.html} to view the ouptut \texttt{blast\_results.html} file. This should look something like below:
+
+\subsubsection{Step 8: Questions}\label{step-8-questions}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  What is the closest match for the longest contig you find in your data? What is the percent identify for this match (the value Z in \texttt{Identities\ =\ X/Y\ (Z\%)}). Recall that if a pathogen is an emerging/novel pathogen then you may not get a perfect match to any existing organisms.
+\item
+  Using the BLAST report alongside all other information we've gathered, what can you say about what pathogen may be causing the patient's symptoms?
+\item
+  It can be difficult to examine all the contigs/BLAST matches at once with the standard BLAST report (which shows the full alignment). We can modify the BLAST command to output a tab-separated file, with one BLAST HSP (a high-scoring segment pair) per line. To do this please run the following:
+
+  \textbf{Commands}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{blastn} \AttributeTok{{-}db}\NormalTok{ \textasciitilde{}/CourseData/module2/db/blast\_db/ref\_viruses\_rep\_genomes\_modified }\AttributeTok{{-}query}\NormalTok{ contigs{-}50.fa }\AttributeTok{{-}outfmt} \StringTok{\textquotesingle{}7 qseqid length slen pident sseqid stitle\textquotesingle{}} \AttributeTok{{-}out}\NormalTok{ blast\_report.tsv}
+\end{Highlighting}
+\end{Shaded}
+
+  This should construct a tabular BLAST report with the columns labeled like \texttt{query\ id,\ alignment\ length,\ subject\ length,\ \%\ identity,\ subject\ id,\ subject\ title}. Taking a look at the file \texttt{blast\_report.tsv}, what are all the different BLAST matches you can find (the different values for \texttt{subject\ title})? How do they compare in terms of \texttt{\%\ identity} and \texttt{alignment\ length} (in general, higher values for both of these should be better matches)?
+\end{enumerate}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\#\#\# 5. Final words
+
+Congratulations, you've finished this lab. As a final check on your results, you can use \href{https://blast.ncbi.nlm.nih.gov/Blast.cgi}{NCBI's online tool} to perform a BLAST on our top 50 contigs to see what matches to the contigs.
+
+The source of the data and patient background information can be found at \url{https://doi.org/10.1038/s41586-020-2008-3} (\textbf{clicking this link will reveal what the illness is}). The only modification made to the original metatranscriptomic reads was to reduce them to 10\% of the orginal file size.
+
+While we used \textbf{MEGAHIT} to perform the assembly, there are a number of other more recent assemblers that may be useful. In particular, the \href{https://cab.spbu.ru/software/spades/}{SPAdes} suite of tools (such as \href{https://doi.org/10.1093/bioinformatics/btaa490}{metaviralspades} or \href{https://doi.org/10.1093/gigascience/giz100}{rnaspades}) may be useful to look into for this sort of data analysis.
+
+As a final note, NCBI also performs taxonomic analysis using their own software and you can actually view these using Krona directly from NCBI. Please click \href{https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR10971381}{here} and go to the \emph{Analysis} tab for NCBI's taxonomic analysis of this sequence data (\textbf{clicking this link will reveal what the illness is}).
 
 \chapter{Module 3 Pathogen Typing}\label{module-3-pathogen-typing}
 
@@ -1055,7 +1760,7 @@ You now see an \texttt{assemblies/} folder in the current directory along with a
 \end{Highlighting}
 \end{Shaded}
 
-\subsubsection{Activate environment}\label{activate-environment}
+\subsubsection{Activate environment}\label{activate-environment-1}
 
 Next we will activate the pre-installed \href{https://docs.conda.io/en/latest/}{conda} environment, which will have all the tools needed by this tutorial pre-installed. To do this please run the following:
 
