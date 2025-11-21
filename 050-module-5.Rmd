@@ -27,6 +27,7 @@ modified: Nov 16 2025
 7. [End of lab](#end-mod5)
 
 <a name="intro-mod5"></a>
+
 ### 1. Introduction
 
 #### 1.1. Background
@@ -67,6 +68,7 @@ If you are interested in exploring more complex applications and methods for phy
 
 
 <a name="software-mod5"></a>
+
 ### 2. List of software for tutorial 
 
 - [R package tidyverse][]
@@ -81,6 +83,7 @@ If you are interested in exploring more complex applications and methods for phy
 - [Delphy][]
 
 <a name="setup-mod5"></a>
+
 ### 3. Exercise setup 
 
 #### 3.0. Data source
