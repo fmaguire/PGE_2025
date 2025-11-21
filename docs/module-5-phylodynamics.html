@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Module 5 Phylodynamics | IDE Module 5 Lab</title>
   <meta name="description" content="Phylodynamics of SARS-CoV-2 B.1.1.7" />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.45 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Module 5 Phylodynamics | IDE Module 5 Lab" />
   <meta property="og:type" content="book" />
@@ -77,9 +77,8 @@
 
 
 <style type="text/css">
-html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -89,7 +88,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -225,13 +224,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#lab-4"><i class="fa fa-check"></i>Lab</a>
 <ul>
 <li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#table-of-contents"><i class="fa fa-check"></i>Table of contents</a></li>
-<li class="chapter" data-level="" data-path="module-2-emerging-pathogen-detection-and-identification.html"><a href="module-2-emerging-pathogen-detection-and-identification.html#intro"><i class="fa fa-check"></i>1. Introduction</a></li>
-<li class="chapter" data-level="" data-path="module-2-emerging-pathogen-detection-and-identification.html"><a href="module-2-emerging-pathogen-detection-and-identification.html#software"><i class="fa fa-check"></i>2. List of software for tutorial</a></li>
-<li class="chapter" data-level="" data-path="module-2-emerging-pathogen-detection-and-identification.html"><a href="module-2-emerging-pathogen-detection-and-identification.html#setup"><i class="fa fa-check"></i>3. Exercise setup</a></li>
-<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#phylodyn"><i class="fa fa-check"></i>4. Maximum likelihood phylodynamic analysis</a></li>
-<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#visualize-tree"><i class="fa fa-check"></i>5. Visualizing the phylodynamic analysis</a></li>
-<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#delphy"><i class="fa fa-check"></i>6. Delphy analysis</a></li>
-<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#end"><i class="fa fa-check"></i>7. End of lab</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#introduction-1"><i class="fa fa-check"></i>1. Introduction</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#list-of-software-for-tutorial"><i class="fa fa-check"></i>2. List of software for tutorial</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#exercise-setup"><i class="fa fa-check"></i>3. Exercise setup</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#maximum-likelihood-phylodynamic-analysis"><i class="fa fa-check"></i>4. Maximum likelihood phylodynamic analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#visualizing-the-phylodynamic-analysis"><i class="fa fa-check"></i>5. Visualizing the phylodynamic analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#delphy-analysis"><i class="fa fa-check"></i>6. Delphy analysis</a></li>
+<li class="chapter" data-level="" data-path="module-5-phylodynamics.html"><a href="module-5-phylodynamics.html#end-of-lab"><i class="fa fa-check"></i>7. End of lab</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -273,18 +272,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="table-of-contents" class="section level3 hasAnchor">
 <h3>Table of contents<a href="module-5-phylodynamics.html#table-of-contents" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol style="list-style-type: decimal">
-<li><a href="module-2-emerging-pathogen-detection-and-identification.html#intro">Introduction</a></li>
-<li><a href="module-2-emerging-pathogen-detection-and-identification.html#software">Software</a><br />
+<li><a href="#intro-mod5">Introduction</a></li>
+<li><a href="#software-mod5">Software</a><br />
 </li>
-<li><a href="module-2-emerging-pathogen-detection-and-identification.html#setup">Exercise setup</a></li>
-<li><a href="module-5-phylodynamics.html#phylodyn">Maximum likelihood phylodynamics analysis</a></li>
-<li><a href="module-5-phylodynamics.html#visualize-tree">Visualizing the phylogeny in auspice</a></li>
-<li><a href="module-5-phylodynamics.html#delphy">Delphy Bayesian phylodynamic analysis</a></li>
-<li><a href="module-5-phylodynamics.html#end">End of lab</a></li>
+<li><a href="#setup-mod5">Exercise setup</a></li>
+<li><a href="#phylodyn-mod5">Maximum likelihood phylodynamics analysis</a></li>
+<li><a href="#visualize-tree-mod5">Visualizing the phylogeny in auspice</a></li>
+<li><a href="#delphy-mod5">Delphy Bayesian phylodynamic analysis</a></li>
+<li><a href="#end-mod5">End of lab</a></li>
 </ol>
+<p><a name="intro-mod5"></a></p>
 </div>
-<div id="intro" class="section level3 hasAnchor">
-<h3>1. Introduction<a href="module-2-emerging-pathogen-detection-and-identification.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="introduction-1" class="section level3 hasAnchor">
+<h3>1. Introduction<a href="module-5-phylodynamics.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="background-1" class="section level4 hasAnchor">
 <h4>1.1. Background<a href="module-5-phylodynamics.html#background-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>SARS-CoV-2 Pango lineage B.1.1.7 <a href="https://www.nature.com/articles/s41564-020-0770-5">(Rambaut et al. 2020)</a> was the first officially designated variant of concern (VOC) by the World Health Organization <a href="https://www.nature.com/articles/s41564-021-00932-w">(Konings et al. 2021)</a>, due to its increased transmissibility compared to other circulating lineages. Although B.1.1.7 was discovered in December 2020, it originated in the months preceding that. For a more thorough investigation into the circumstances of B.1.1.7 discovery and emergence, see <a href="https://academic.oup.com/ve/article/8/2/veac080/6677185">(Hill et al., 2022)</a> on “The origins and molecular evolution of SARS-CoV-2 lineage B.1.1.7 in the UK”.</p>
@@ -310,10 +310,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>For large scale analyses (&gt;10,000 sequences), maximum likelihood pipelines implemented in augur, treetime, iqtree, and R package ape, are more feasible, while analyses of smaller datasets (up to ~1000 sequences) can be done using Bayesian frameworks implemented in <a href="https://delphy.fathom.info/">Delphy</a> and <a href="http://www.beast2.org/">BEAST</a>, with the added benefits of incorporating uncertainty in the tree inference in parameter estimation and of specifying priors to limit the search space.</p>
 <p>If you are interested in exploring more complex applications and methods for phylodynamic analyses, I recommend checking out resources from the <a href="https://taming-the-beast.org/workshops/Taming-the-BEAST-Online/">“Taming the BEAST” workshops</a> that are held semi-regularly, as well as he tutorials shared by the <a href="http://www.beast2.org/tutorials/">BEAST Developers</a>. Paul Lewis’ <a href="http://phyloseminar.org/recorded.html">phyloseminar.org</a> lectures on Bayesian phylogenetics (<a href="https://www.youtube.com/watch?v=4PWlnNsfz90">part 1</a> and <a href="https://www.youtube.com/watch?v=TLtOS--YwkU">part 2</a>) are also an excellent place to start to learn the basic theory of Bayesian methods.</p>
 <p><em>Let’s go.</em></p>
+<p><a name="software-mod5"></a></p>
 </div>
 </div>
-<div id="software" class="section level3 hasAnchor">
-<h3>2. List of software for tutorial<a href="module-2-emerging-pathogen-detection-and-identification.html#software" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="list-of-software-for-tutorial" class="section level3 hasAnchor">
+<h3>2. List of software for tutorial<a href="module-5-phylodynamics.html#list-of-software-for-tutorial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li><a href="https://tidyverse.org/packages/">R package tidyverse</a></li>
 <li><a href="https://github.com/Bioconductor/Biostrings">R package Biostrings</a></li>
@@ -326,9 +327,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://auspice.us/">Auspice</a></li>
 <li><a href="https://delphy.fathom.info/">Delphy</a></li>
 </ul>
+<p><a name="setup-mod5"></a></p>
 </div>
-<div id="setup" class="section level3 hasAnchor">
-<h3>3. Exercise setup<a href="module-2-emerging-pathogen-detection-and-identification.html#setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="exercise-setup" class="section level3 hasAnchor">
+<h3>3. Exercise setup<a href="module-5-phylodynamics.html#exercise-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div id="data-source" class="section level4 hasAnchor">
 <h4>3.0. Data source<a href="module-5-phylodynamics.html#data-source" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>We will not spend time downloading the data, but rather will copy the datafiles as described in the subsequent section. However, it’s important to understand how this was done for the sake of reproducibility and interpretation.</p>
@@ -410,11 +412,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Identify and remove incomplete collection date (yyyy or yyyy-mm)</li>
 <li>Create a smaller subsampled dataset ‘complete_sampUK’ with equal number of non-UK and UK samples
 <ul>
-<li><em>NOTE: this is the dataset that we will be working with in this lab due to limited time. In a more robust analysis, we would include more samples, repeat sampling with different seeds, and rather than sampling at random, we might consider sampling proportionally to geographies’ diagnosed cases through time to more accurately reflect spatiotemporal dynamics</em></li>
+<li><em>NOTE: this is the dataset that we will be working with in this lab due to limited time.</em> In a more robust analysis, we would include more samples, repeat sampling with different seeds, and rather than sampling at random, we might consider sampling proportionally to geographies’ diagnosed cases through time to more accurately reflect spatiotemporal dynamics</li>
 </ul></li>
 <li>Export fasta and csv files into data/complete subfolder</li>
 </ul>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>How many sequences were downloaded?</li>
 <li>How many sequences were there after de-duplicating?</li>
@@ -422,14 +429,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>How might you modify the subsampling scheme to reduce bias? to quantify uncertainty in the sampling process?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
+</div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
 <li>n=15790</li>
 <li>n=14774</li>
 <li>n=10813; n=178</li>
-<li>Proportional to case counts through time and space. Multiple subsamples of different sizes or proportional contributions of countries.</li>
-</ul>
-</div>
+<li>Proportional to case counts through time and space. Multiple
+subsamples of different sizes or proportional contributions of
+countries.</li>
+</ul></div></details>
 <p>Once that code is done, let’s run some R scripts from the command line to quickly summarize the number and/or proportion of sequences by country through time. Alternatively, in RStudio, go to file&gt;new file&gt;Rscript, copy/paste code chunk, save and run it there.</p>
 <p><strong>Commands</strong></p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb75-1"><a href="module-5-phylodynamics.html#cb75-1" tabindex="-1"></a><span class="co">#</span></span>
@@ -482,24 +490,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb75-48"><a href="module-5-phylodynamics.html#cb75-48" tabindex="-1"></a><span class="co">#save it</span></span>
 <span id="cb75-49"><a href="module-5-phylodynamics.html#cb75-49" tabindex="-1"></a><span class="ex">ggsave</span><span class="er">(</span><span class="ex">paste0</span><span class="er">(</span><span class="st">&quot;data/complete/samples_time_country.png&quot;</span><span class="kw">))</span></span></code></pre></div>
 <p>If you are in command line R, enter q() to get out.</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>How many sequences were included from the UK?</li>
 <li>What is the range of sample collection dates in the final dataset?</li>
 <li>How many countries were represented in the final dataset?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
+</div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
 <li>89</li>
 <li>2020-09-20 to 2021-01-01</li>
 <li>17 countries</li>
-</ul>
+</ul></div></details>
+<p><a name="phylodyn-mod5"></a></p>
 </div>
 </div>
-</div>
-<div id="phylodyn" class="section level3 hasAnchor">
-<h3>4. Maximum likelihood phylodynamic analysis<a href="module-5-phylodynamics.html#phylodyn" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="maximum-likelihood-phylodynamic-analysis" class="section level3 hasAnchor">
+<h3>4. Maximum likelihood phylodynamic analysis<a href="module-5-phylodynamics.html#maximum-likelihood-phylodynamic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The overall goal of this lab is to estimate where and when B.1.1.7 most likely originated. To do this, we will mostly make use of the <a href="https://docs.nextstrain.org/projects/augur/en/stable/index.html">Augur</a> maximum likelihood tool suite, which powers the <a href="https://nextstrain.org/">NextStrain</a> website. Within augur, the key tool actually being used for most of our inferences is <a href="https://treetime.readthedocs.io/en/latest/">TreeTime</a> a likelihood based tool for inferring molecular clocks and ancestral traits.</p>
 <p><strong>An overview of the basic usage of Augur (figure from the Augur documentation):</strong>
 <img src="img/PGE_mod5/augur_analysis_sketch.webp" alt="augur workflow" /></p>
@@ -549,16 +562,20 @@ Trimmed gaps in MN908947.3|China|2019-12-26 from the alignment</code></pre>
 <p><strong>Commands</strong></p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb78-1"><a href="module-5-phylodynamics.html#cb78-1" tabindex="-1"></a><span class="ex">augur</span> index <span class="at">--sequences</span> data/aligned/b117_seq_complete_sampUK_aligned.fasta  <span class="at">--output</span>  data/aligned/b117_seq_complete_sampUK_aligned_sequence_index.tsv</span></code></pre></div>
 <p>Inspect the index output in the ‘aligned’ subfolder.</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>Knowing that the genome size is 29,903 bp, do any samples appear to have more gaps or Ns than you would expect?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>At first glance, none appear to have &gt;~3000 gaps or Ns.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>At first glance, none appear to have &gt;~3000 gaps or Ns.</li>
+</ul></div></details>
 </div>
 <div id="filter-out-low-quality-sequences-augur-filter" class="section level4 hasAnchor">
 <h4>4.3. Filter out low quality sequences (<code>augur filter</code>)<a href="module-5-phylodynamics.html#filter-out-low-quality-sequences-augur-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -573,18 +590,26 @@ Trimmed gaps in MN908947.3|China|2019-12-26 from the alignment</code></pre>
 178 strains passed all filters
 </code></pre>
 <p>Nice, all the sequences passed our quality filters (this is rarer than you might think).</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>Why is it important to remove low quality sequences prior to phylogenetic inference?</li>
 <li>The choice of maximum 10% ambiguous and gaps seems (<em>is</em>) somewhat arbitrary. How would increasing or decreasing this threshold change the analysis?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>Sequences with excessive gaps or ambiguous sites may not have as high of accuracy, and have less signal to contribute to the tree, which could bias its placement.</li>
-<li>Increasing the threshold would allow more sequences of lower quality to pass through the filter. Decreasing the threshold is more conservative.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>Sequences with excessive gaps or ambiguous sites may not have as
+high of accuracy, and have less signal to contribute to the tree, which
+could bias its placement.</li>
+<li>Increasing the threshold would allow more sequences of lower quality
+to pass through the filter. Decreasing the threshold is more
+conservative.</li>
+</ul></div></details>
 </div>
 <div id="mask-problematic-sites-in-the-alignment" class="section level4 hasAnchor">
 <h4>4.4. Mask problematic sites in the alignment<a href="module-5-phylodynamics.html#mask-problematic-sites-in-the-alignment" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -778,10 +803,11 @@ Validating schema of &#39;trees/analysis-package.json&#39;...
 Validating that the JSON is internally consistent...
 Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <hr />
+<p><a name="visualize-tree-mod5"></a></p>
 </div>
 </div>
-<div id="visualize-tree" class="section level3 hasAnchor">
-<h3>5. Visualizing the phylodynamic analysis<a href="module-5-phylodynamics.html#visualize-tree" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="visualizing-the-phylodynamic-analysis" class="section level3 hasAnchor">
+<h3>5. Visualizing the phylodynamic analysis<a href="module-5-phylodynamics.html#visualizing-the-phylodynamic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now that we’ve constructed and packaged up a tree (<code>analysis-package.json</code>), we can visualize this data alongside the data augur has extracted from our metadata using augur and <a href="https://auspice.us/">Auspice</a>.</p>
 <p>Note: I’ve had issues recently getting this to work in firefox so recommend using a chromium-based browser if you have issues.</p>
 <hr />
@@ -803,24 +829,39 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <p><strong>The mutation tree:</strong>
 <img src="img/PGE_mod5/auspice_muts.png" alt="auspice mutation tree" /></p>
 <p>Now, we can do the same thing if we switch to “TIME” and look at the approximate inferred dates of the internal nodes of the tree. We can also mouse over to get the exact pop-up dates.</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>What was the maximum number of mutations from the root to any tip?</li>
 <li>What was the most likely date of the root (AKA the <strong>time of the most recent common ancestor (TMRCA)</strong>) ? Confidence interval?</li>
 <li>How do you interpret the root of this phylogeny? Is it representative of the entire B.1.1.7 lineage?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>18 (to tip MW598424.1/Ghana/2020-12-22). This tip could be considered a temporal outlier and excluded from the analysis.</li>
-<li>2020-08-21, but the confidence interval is wide and lower bound is unrealistic (2016-05-31 - 2020-09-12)</li>
-<li>This root is the most recent common ancestor (MRCA) of a random sample of early B.1.1.7 sequences, downsampling the UK samples to an equal number as non-UK samples. It may not be fully representative of the full diversity of early B.1.1.7, nor later evolution of B.1.1.7.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>18 (to tip MW598424.1/Ghana/2020-12-22). This tip could be
+considered a temporal outlier and excluded from the analysis.</li>
+<li>2020-08-21, but the confidence interval is wide and lower bound is
+unrealistic (2016-05-31 - 2020-09-12)</li>
+<li>This root is the most recent common ancestor (MRCA) of a random
+sample of early B.1.1.7 sequences, downsampling the UK samples to an
+equal number as non-UK samples. It may not be fully representative of
+the full diversity of early B.1.1.7, nor later evolution of
+B.1.1.7.</li>
+</ul></div></details>
 <p>Now, have a look at the “CLOCK” layout/figure found in the options bar on the left of your screen. This brings up a <strong>root-to-tip regression</strong> from the divergence tree (i.e., how many mutations from root to tip, versus collection date). You can click on individual points (including the upper outlier from Ghana) to see the average substitution rate for that tip. for that tip.</p>
 <p><strong>The root-to-tip regression plot:</strong>
 <img src="img/PGE_mod5/auspice_rtt.png" alt="auspice root-to-tip" /></p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>What is the slope of the root-to-tip regression (in subs/year; subs/site/year)? What does it represent?</li>
 <li>Does the trend line for the root-to-tip regression look like a good fit with good temporal signal?</li>
@@ -828,14 +869,21 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <li>How might you estimate the uncertainty in these estimates?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>14.9 substitutions per year. Or (ignoring masked sites), 14.9/29903=0.0004982778=5.0 subs/site/year. It represents the strict molecular clock rate.</li>
-<li>Aside from the outlier, it looks like a good fit (an R-squared value should really be reported) with reasonable temporal signal.</li>
-<li>The confidence interval on the root is wide, we have a relatively small (singular) sample, but the linear fit is decent and we included early samples with higher probabilities, so I’d say medium to low accuracy for the mean estimate.</li>
-<li>Multiple subsamples of higher sample sizes. Bootstrapping/ultrafast bootstrapping. Multiple clock rate assumptions when inferring the time tree.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>14.9 substitutions per year. Or (ignoring masked sites),
+14.9/29903=0.0004982778=5.0 subs/site/year. It represents the strict
+molecular clock rate.</li>
+<li>Aside from the outlier, it looks like a good fit (an R-squared value
+should really be reported) with reasonable temporal signal.</li>
+<li>The confidence interval on the root is wide, we have a relatively
+small (singular) sample, but the linear fit is decent and we included
+early samples with higher probabilities, so I’d say medium to low
+accuracy for the mean estimate.</li>
+<li>Multiple subsamples of higher sample sizes. Bootstrapping/ultrafast
+bootstrapping. Multiple clock rate assumptions when inferring the time
+tree.</li>
+</ul></div></details>
 <hr />
 </div>
 <div id="examine-the-ancestral-state-reconstruction" class="section level4 hasAnchor">
@@ -843,7 +891,12 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <p>We can colour the tree and rename the tree tip labels using the metadata to reflect the ancestral state reconstruction. The internal nodes/branches will be coloured based on the inferred ancestral state, in this case Country or Geo_location. Investigate the ancestral states at internal nodes throughout the tree including at the root. Use the play button to visualize the dispersion globally.</p>
 <p><strong>Here is a look at what you should be seeing in auspice when you change branches to be colored by Country and choose the multi-panel layout.</strong>
 <img src="img/PGE_mod5/auspice_geo.png" alt="auspice phylogeography" /></p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>Based on this analysis, where was the root of B.1.1.7 likely to have occurred?</li>
 <li>How do you think sequence subsampling might have impacted this analysis?</li>
@@ -851,20 +904,30 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <li>How could you use the output of this analysis to quantify viral dispersion?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>The United Kingdom</li>
-<li>We included far fewer sequences from the UK than were available, and still inferred it as the likely origin. It would be worth comparing other sampling schemes to validate this, but we have high confidence that this was the likely origin, given the sequences publicly available.</li>
-<li>More early B.1.1.7 sequences from other countries would be informative. Also, including close parental or sister lineages (like B.1 similar to B.1.1.7) of similar time/place could add resolution to the analysis.</li>
-<li>Quantify importation or exportation rates by country through time. You could also incorporate population size, connectivity (mobility data), geographical distance, and other factors to evaluate (or control for) factors associated with elevated dispersal.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>The United Kingdom</li>
+<li>We included far fewer sequences from the UK than were available, and
+still inferred it as the likely origin. It would be worth comparing
+other sampling schemes to validate this, but we have high confidence
+that this was the likely origin, given the sequences publicly
+available.</li>
+<li>More early B.1.1.7 sequences from other countries would be
+informative. Also, including close parental or sister lineages (like B.1
+similar to B.1.1.7) of similar time/place could add resolution to the
+analysis.</li>
+<li>Quantify importation or exportation rates by country through time.
+You could also incorporate population size, connectivity (mobility
+data), geographical distance, and other factors to evaluate (or control
+for) factors associated with elevated dispersal.</li>
+</ul></div></details>
 <hr />
 <p>That’s that for our maximum likelihood phylogeographic inference. Now, we’re going to compare those results to a Bayesian approach.</p>
+<p><a name="delphy-mod5"></a></p>
 </div>
 </div>
-<div id="delphy" class="section level3 hasAnchor">
-<h3>6. Delphy analysis<a href="module-5-phylodynamics.html#delphy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="delphy-analysis" class="section level3 hasAnchor">
+<h3>6. Delphy analysis<a href="module-5-phylodynamics.html#delphy-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><a href="https://delphy.fathom.info/">Delphy</a> is a newly released Bayesian phylogenetics tool designed to be fast, scalable, accessible, and accurate. Delphy is faster than other Bayesian tools because it uses Explicit Mutation-Annotated Trees (EMAT), which are hypotheses of how an ancestral sequence replicated and evolved, mutation by mutation, into the observed dated sequences. Check out their <a href="https://www.biorxiv.org/content/10.1101/2025.03.25.645253v1.full.pdf">pre-print</a> if you want more details.</p>
 <p>In Bayesian phylogenetic (and phylodynamic) inference, many models (made up of trees and parameters) are sampled to generate posterior probability distributions, and our estimates will reflect the <strong>highest posterior density (HPD)</strong>. Bayesian analyses differ from max likelihood approaches in that they incorporate uncertainty from the tree inference and sampling process, and rely on specification of prior probabilities for the parameters to be explored using <strong>Markov Chain Monte Carlo (MCMC)</strong>, which is basically a hill-climbing algorithm that suggests and compares models compared to the previous step. Model convergence is assessed using minimum <a href="https://github.com/fathominfo/delphy-web/wiki/Effective-Sample-Size"><strong>effective sampling size (ESS)</strong></a> reflects and in robust analyses is usually ~200 after removing the burn-in. Burn-in are steps that you don’t include in the final posterior distributions because they represent the model stabilization period. In a robust Bayesian analyses, multiple <strong>MCMC chains</strong> are run, and then combined after burn-in.</p>
 <p>The tree displayed reflects a <strong>maximum clade credibility</strong> tree, which is a single tree with the highest posterior probability across the Bayesian posterior distribution of trees. Branch width represents the credibility threshold, more commonly referred to as <strong>posterior support or probability</strong>, which indicate the strength of evidence for clades, given the data and model used.</p>
@@ -903,16 +966,25 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <p>Before we start the run, go to Customize in the toolbar, then add the metadata file <code>data/delphyb117_seq_complete_sampUK_aligned_filt_mask_delphy.tsv</code> by drag/drop then in Color system, click metadata, color by Country, then select all.</p>
 <p><strong>Delphy customize options:</strong>
 <img src="img/PGE_mod5/delphy_cust.png" alt="delphy add metadata" /></p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li>what biases may we have imposed through our selection of priors?</li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li>We may bias our estimates of the root date by specifying an improper mean molecular clock rate. The skygrid may not fit well with 10 categories (not enough data in early period). The underlying population may be better described by the exponential population distribution. Any misspecified or over-generalized prior has the potential to bias the analysis or underestimate the true uncertainty in the estimates.</li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li>We may bias our estimates of the root date by specifying an improper
+mean molecular clock rate. The skygrid may not fit well with 10
+categories (not enough data in early period). The underlying population
+may be better described by the exponential population distribution. Any
+misspecified or over-generalized prior has the potential to bias the
+analysis or underestimate the true uncertainty in the estimates.</li>
+</ul></div></details>
 </div>
 <div id="run-the-analysis-and-interpret-output" class="section level4 hasAnchor">
 <h4>6.3. Run the analysis and interpret output<a href="module-5-phylodynamics.html#run-the-analysis-and-interpret-output" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -920,59 +992,85 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <p><strong>Here is a look at the more complete run, including a sampled tree, the MCC tree, and the posterior distribution of some key model parameters.</strong>
 <img src="img/PGE_mod5/delphy_mcc.png" alt="delphy mcc" /></p>
 <p>Although Delphy does not seem very good at estimating the ESS and assessing convergence, a good sign of convergence is when the posterior distributions of parameters appear as “fuzzy caterpillars” (converging around similar values, as opposed to jumping around).</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li><p>How do you interpret the change in effective population size through time?</p></li>
 <li><p>Did your model converge? How can you tell?</p></li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li><p>The effective population size is low and then increases rapidly (exponentially?) as this lineage transmitted broadly in the UK and globally, but then appears to decrease at the end of the study perio, but this likely reflects lower sampling rate towards the end of the period.</p></li>
-<li><p>After removing burn-in, the ESS for the parameters shown are below 200, so probably not. We would have to run this for more steps, and maybe for multiple chains that we could combine using a tool like <a href="https://www.beast2.org/tracer-2/">Tracer</a>.</p></li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li><p>The effective population size is low and then increases rapidly
+(exponentially?) as this lineage transmitted broadly in the UK and
+globally, but then appears to decrease at the end of the study perio,
+but this likely reflects lower sampling rate towards the end of the
+period.</p></li>
+<li><p>After removing burn-in, the ESS for the parameters shown are
+below 200, so probably not. We would have to run this for more steps,
+and maybe for multiple chains that we could combine using a tool like <a
+href="https://www.beast2.org/tracer-2/">Tracer</a>.</p></li>
+</ul></div></details>
 <p>NEXT, let’s click on Lineages in the upper tool bar. In the bottom left corner, you can change branch coloring between Credibility and Metadata (Country). You can also change the credibility threshold (posterior support) for nodes’/branches’ shading in the tree displayed.</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li><p>Is the first bifurcation at the root well-supported?</p></li>
 <li><p>What is the median posterior root date?</p></li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li><p>No, the credibility threshold is &lt;50%.</p></li>
-<li><p>Median posterior root date ~19 July 2020. Normally a 95% HPD should be reported, but Delphy does not show that directly. If you have time/interest, you can read the exported data into R and estimate the uncertainty.</p></li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li><p>No, the credibility threshold is &lt;50%.</p></li>
+<li><p>Median posterior root date ~19 July 2020. Normally a 95% HPD
+should be reported, but Delphy does not show that directly. If you have
+time/interest, you can read the exported data into R and estimate the
+uncertainty.</p></li>
+</ul></div></details>
 <p>And now click on Mutations in the upper tool bar. Click on recurrent mutations, then A17615G. This mutation may have evolved independently multiple times, though it was only found in 70 genomes. It is a non-synonymous mutation in the ORF1b gene, resulting in an amino acid change of Lysine to Arginine (K1383R) in the nsp10 protein. Explore the other mutations that occurred in the phylogeny.</p>
-<div type="orange" style="regular" title="Questions" collapsible="false" icon="true">
+<div class="callout-orange">
+<span class="callout-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+<div class="callout-content">
+<div class="callout-title-static">
+<p>Questions</p>
+</div>
 <ul>
 <li><p>Where does the Delphy analysis suggest the root of this B.1.1.7 phylogeny occurred?</p></li>
 <li><p>Does the Bayesian analysis corroborate the maximum likelihood analysis in terms of the time and place of origin of B.1.1.7?</p></li>
 </ul>
 </div>
-<div type="green" style="regular" title="Answers" collapsible="true" icon="true">
-<ul>
-<li><p>The UK</p></li>
-<li><p>Yes! Both the Bayesian and ML analyses suggest this lineage originated around August 20, 2020 in the UK. This is very close to the estimate from <a href="https://academic.oup.com/ve/article/8/2/veac080/6677185">Hill et al. 2022</a> of a “TMRCA of the Alpha clade estimated at 28 August 2020 (95 % HPD: 15th August 2020 to 9th September 2020)”.</p></li>
-</ul>
 </div>
+<details class="callout-dropdown callout-green"><summary class="callout-dropdown-summary"><i class="fas fa-circle-check" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">Answers</span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><ul>
+<li><p>The UK</p></li>
+<li><p>Yes! Both the Bayesian and ML analyses suggest this lineage
+originated around August 20, 2020 in the UK. This is very close to the
+estimate from <a
+href="https://academic.oup.com/ve/article/8/2/veac080/6677185">Hill et
+al. 2022</a> of a “TMRCA of the Alpha clade estimated at 28 August 2020
+(95 % HPD: 15th August 2020 to 9th September 2020)”.</p></li>
+</ul></div></details>
 </div>
 <div id="export-results" class="section level4 hasAnchor">
 <h4>6.4. Export results<a href="module-5-phylodynamics.html#export-results" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>To wrap this Delphy analysis up, go to Customize, then in the bottom left, export the Tree as png and Newick file, and the Delphy run. The Delphy run file can be dropped back into Delphy or read into R. You can also generate input/output to BEAST to run a more <em>bespoke</em> Bayesian analysis.</p>
+<p><a name="end-mod5"></a></p>
 </div>
 </div>
-<div id="end" class="section level3 hasAnchor">
-<h3>7. End of lab<a href="module-5-phylodynamics.html#end" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="end-of-lab" class="section level3 hasAnchor">
+<h3>7. End of lab<a href="module-5-phylodynamics.html#end-of-lab" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You’ve made it to the end of the lab. Awesome job.</p>
-<div type="orange" style="regular" title="You deserve a *little treat*" collapsible="true" icon="true">
-<div class="float">
+<details class="callout-dropdown callout-orange"><summary class="callout-dropdown-summary"><i class="fas fa-fire" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;<span class="callout-dropdown-title">You deserve a <em>little treat</em></span> <span class="callout-dropdown-caret"><i class="fas fa-chevron-right" aria-hidden="true"></i></span></summary><div class="callout-dropdown-content"><figure>
 <img src="img/PGE_mod5/end.png" alt="treat" />
-<div class="figcaption">treat</div>
-</div>
-</div>
+<figcaption aria-hidden="true">treat</figcaption>
+</figure></div></details>
 <p>If you have some extra time, you can explore Auspice or Delphy further, or see how the results differ if you change the subsampling scheme or the clock rate. Another <em>fun</em> activity would be to read the Delphy output into R and summarize the median and 95% highest posterior distribution of the root date,</p>
 
 </div>
@@ -998,42 +1096,42 @@ Validation of &#39;trees/analysis-package.json&#39; succeeded.</code></pre>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": false,
-"twitter": false,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/bioinformaticsdotca//blob/main/050-module-5.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["_main.pdf", "_main.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": false,
+    "twitter": false,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/bioinformaticsdotca//blob/main/050-module-5.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
