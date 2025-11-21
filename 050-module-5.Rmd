@@ -187,7 +187,7 @@ What is happening inside this script:
 - Export fasta and csv files into data/complete subfolder
 
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - How many sequences were downloaded? 
 - How many sequences were there after de-duplicating? 
@@ -197,7 +197,7 @@ What is happening inside this script:
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - n=15790
 - n=14774
@@ -263,7 +263,7 @@ ggsave(paste0("data/complete/samples_time_country.png"))
 
 If you are in command line R, enter q() to get out. 
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - How many sequences were included from the UK?
 - What is the range of sample collection dates in the final dataset?
@@ -271,7 +271,7 @@ If you are in command line R, enter q() to get out.
 
 ::::
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - 89
 - 2020-09-20 to 2021-01-01
@@ -351,13 +351,13 @@ augur index --sequences data/aligned/b117_seq_complete_sampUK_aligned.fasta  --o
 
 Inspect the index output in the 'aligned' subfolder. 
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - Knowing that the genome size is 29,903 bp, do any samples appear to have more gaps or Ns than you would expect?
 
 ::::
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - At first glance, none appear to have >~3000 gaps or Ns.
 
@@ -385,7 +385,7 @@ augur filter --nthreads 2 --sequences data/aligned/b117_seq_complete_sampUK_alig
 
 Nice, all the sequences passed our quality filters (this is rarer than you might think).
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - Why is it important to remove low quality sequences prior to phylogenetic inference?
 - The choice of maximum 10% ambiguous and gaps seems (*is*) somewhat arbitrary. How would increasing or decreasing this threshold change the analysis?
@@ -393,7 +393,7 @@ Nice, all the sequences passed our quality filters (this is rarer than you might
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - Sequences with excessive gaps or ambiguous sites may not have as high of accuracy, and have less signal to contribute to the tree, which could bias its placement.
 - Increasing the threshold would allow more sequences of lower quality to pass through the filter. Decreasing the threshold is more conservative.
@@ -682,7 +682,7 @@ First, let's look at the divergence tree and use the x-axis to work out how many
 
 Now, we can do the same thing if we switch to "TIME" and look at the approximate inferred dates of the internal nodes of the tree. We can also mouse over to get the exact pop-up dates.
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - What was the maximum number of mutations from the root to any tip? 
 - What was the most likely date of the root (AKA the **time of the most recent common ancestor (TMRCA)**) ? Confidence interval?
@@ -691,7 +691,7 @@ Now, we can do the same thing if we switch to "TIME" and look at the approximate
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - 18 (to tip MW598424.1/Ghana/2020-12-22). This tip could be considered a temporal outlier and excluded from the analysis. 
 - 2020-08-21, but the confidence interval is wide and lower bound is unrealistic (2016-05-31 - 2020-09-12)
@@ -705,7 +705,7 @@ Now, have a look at the "CLOCK" layout/figure found in the options bar on the le
 **The root-to-tip regression plot:**
 ![auspice root-to-tip](img/PGE_mod5/auspice_rtt.png)
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - What is the slope of the root-to-tip regression (in subs/year; subs/site/year)? What does it represent?
 - Does the trend line for the root-to-tip regression look like a good fit with good temporal signal?
@@ -715,7 +715,7 @@ Now, have a look at the "CLOCK" layout/figure found in the options bar on the le
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - 14.9 substitutions per year. Or (ignoring masked sites), 14.9/29903=0.0004982778=5.0 subs/site/year. It represents the strict molecular clock rate.
 - Aside from the outlier, it looks like a good fit (an R-squared value should really be reported) with reasonable temporal signal.
@@ -733,7 +733,7 @@ We can colour the tree and rename the tree tip labels using the metadata to refl
 **Here is a look at what you should be seeing in auspice when you change branches to be colored by Country and choose the multi-panel layout.**
 ![auspice phylogeography](img/PGE_mod5/auspice_geo.png)
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - Based on this analysis, where was the root of B.1.1.7 likely to have occurred?
 - How do you think sequence subsampling might have impacted this analysis?
@@ -742,7 +742,7 @@ We can colour the tree and rename the tree tip labels using the metadata to refl
 
 ::::
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - The United Kingdom
 - We included far fewer sequences from the UK than were available, and still inferred it as the likely origin. It would be worth comparing other sampling schemes to validate this, but we have high confidence that this was the likely origin, given the sequences publicly available.
@@ -805,14 +805,14 @@ Before we start the run, go to Customize in the toolbar, then add the metadata f
 **Delphy customize options:**
 ![delphy add metadata](img/PGE_mod5/delphy_cust.png)
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - what biases may we have imposed through our selection of priors?
 
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - We may bias our estimates of the root date by specifying an improper mean molecular clock rate. The skygrid may not fit well with 10 categories (not enough data in early period). The underlying population may be better described by the exponential population distribution. Any misspecified or over-generalized prior has the potential to bias the analysis or underestimate the true uncertainty in the estimates.
 
@@ -827,7 +827,7 @@ Hit play and watch in *statistical awe* as trees sampled from the posterior are 
 
 Although Delphy does not seem very good at estimating the ESS and assessing convergence, a good sign of convergence is when the posterior distributions of parameters appear as "fuzzy caterpillars" (converging around similar values, as opposed to jumping around). 
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - How do you interpret the change in effective population size through time? 
 
@@ -836,7 +836,7 @@ Although Delphy does not seem very good at estimating the ESS and assessing conv
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - The effective population size is low and then increases rapidly (exponentially?) as this lineage transmitted broadly in the UK and globally, but then appears to decrease at the end of the study perio, but this likely reflects lower sampling rate towards the end of the period. 
 
@@ -846,7 +846,7 @@ Although Delphy does not seem very good at estimating the ESS and assessing conv
 
 NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, you can change branch coloring between Credibility and Metadata (Country). You can also change the credibility threshold (posterior support) for nodes'/branches' shading in the tree displayed.
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - Is the first bifurcation at the root well-supported? 
 
@@ -855,7 +855,7 @@ NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, 
 ::::
 
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - No, the credibility threshold is <50%.
 
@@ -865,7 +865,7 @@ NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, 
 
 And now click on Mutations in the upper tool bar. Click on recurrent mutations, then A17615G. This mutation may have evolved independently multiple times, though it was only found in 70 genomes. It is a non-synonymous mutation in the ORF1b gene, resulting in an amino acid change of Lysine to Arginine (K1383R) in the nsp10 protein. Explore the other mutations that occurred in the phylogeny.
 
-:::: {type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
 
 - Where does the Delphy analysis suggest the root of this B.1.1.7 phylogeny occurred?
 
@@ -873,7 +873,7 @@ And now click on Mutations in the upper tool bar. Click on recurrent mutations, 
 
 ::::
 
-:::: {type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
 
 - The UK
 
@@ -891,7 +891,7 @@ To wrap this Delphy analysis up, go to Customize, then in the bottom left, expor
 
 You've made it to the end of the lab. Awesome job.
 
-:::: {type="orange" style="regular" title="You deserve a *little treat*" collapsible="true" icon="true"}
+:::: {.callout type="orange" style="regular" title="You deserve a *little treat*" collapsible="true" icon="true"}
  
 ![treat](img/PGE_mod5/end.png)
 ::::
