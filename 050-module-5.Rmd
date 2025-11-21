@@ -18,16 +18,16 @@ modified: Nov 16 2025
 ---
 
 ### Table of contents
-1. [Introduction](#intro)
-2. [Software](#software)    
-3. [Exercise setup](#setup)
-4. [Maximum likelihood phylodynamics analysis](#phylodyn)
-5. [Visualizing the phylogeny in auspice](#visualize-tree)
-6. [Delphy Bayesian phylodynamic analysis](#delphy)
-7. [End of lab](#end)
+1. [Introduction](#intro-mod5)
+2. [Software](#software-mod5)    
+3. [Exercise setup](#setup-mod5)
+4. [Maximum likelihood phylodynamics analysis](#phylodyn-mod5)
+5. [Visualizing the phylogeny in auspice](#visualize-tree-mod5)
+6. [Delphy Bayesian phylodynamic analysis](#delphy-mod5)
+7. [End of lab](#end-mod5)
 
-
-### 1. Introduction {#intro}
+<a name="intro-mod5"></a>
+### 1. Introduction
 
 #### 1.1. Background
 SARS-CoV-2 Pango lineage B.1.1.7 [(Rambaut et al. 2020)](https://www.nature.com/articles/s41564-020-0770-5) was the first officially designated variant of concern (VOC) by the World Health Organization [(Konings et al. 2021)](https://www.nature.com/articles/s41564-021-00932-w), due to its increased transmissibility compared to other circulating lineages. Although B.1.1.7 was discovered in December 2020, it originated in the months preceding that. For a more thorough investigation into the circumstances of B.1.1.7 discovery and emergence, see [(Hill et al., 2022)](https://academic.oup.com/ve/article/8/2/veac080/6677185) on "The origins and molecular evolution of SARS-CoV-2 lineage B.1.1.7 in the UK".
@@ -66,8 +66,8 @@ If you are interested in exploring more complex applications and methods for phy
 
 
 
-
-### 2. List of software for tutorial {#software}
+<a name="software-mod5"></a>
+### 2. List of software for tutorial 
 
 - [R package tidyverse][]
 - [R package Biostrings][]
@@ -80,8 +80,8 @@ If you are interested in exploring more complex applications and methods for phy
 - [Auspice][]
 - [Delphy][]
 
-
-### 3. Exercise setup {#setup}
+<a name="setup-mod5"></a>
+### 3. Exercise setup 
 
 #### 3.0. Data source
 
@@ -183,11 +183,11 @@ What is happening inside this script:
 - Rename sequences without any spaces and add sequence name to metadata
 - Identify and remove incomplete collection date (yyyy or yyyy-mm)
 - Create a smaller subsampled dataset 'complete_sampUK' with equal number of non-UK and UK samples
-	- *NOTE: this is the dataset that we will be working with in this lab due to limited time. In a more robust analysis, we would include more samples, repeat sampling with different seeds, and rather than sampling at random, we might consider sampling proportionally to geographies' diagnosed cases through time to more accurately reflect spatiotemporal dynamics*
+	- *NOTE: this is the dataset that we will be working with in this lab due to limited time.* In a more robust analysis, we would include more samples, repeat sampling with different seeds, and rather than sampling at random, we might consider sampling proportionally to geographies' diagnosed cases through time to more accurately reflect spatiotemporal dynamics
 - Export fasta and csv files into data/complete subfolder
 
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - How many sequences were downloaded? 
 - How many sequences were there after de-duplicating? 
@@ -197,7 +197,7 @@ What is happening inside this script:
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - n=15790
 - n=14774
@@ -263,7 +263,7 @@ ggsave(paste0("data/complete/samples_time_country.png"))
 
 If you are in command line R, enter q() to get out. 
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - How many sequences were included from the UK?
 - What is the range of sample collection dates in the final dataset?
@@ -271,7 +271,7 @@ If you are in command line R, enter q() to get out.
 
 ::::
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - 89
 - 2020-09-20 to 2021-01-01
@@ -281,8 +281,9 @@ If you are in command line R, enter q() to get out.
 
 
 
+<a name="phylodyn-mod5"></a>
 
-### 4. Maximum likelihood phylodynamic analysis {#phylodyn}
+### 4. Maximum likelihood phylodynamic analysis 
 
 The overall goal of this lab is to estimate where and when B.1.1.7 most likely originated. To do this, we will mostly make use of the [Augur][] maximum likelihood tool suite, which powers the [NextStrain](https://nextstrain.org/) website. Within augur, the key tool actually being used for most of our inferences is [TreeTime][] a likelihood based tool for inferring molecular clocks and ancestral traits.
 
@@ -351,13 +352,13 @@ augur index --sequences data/aligned/b117_seq_complete_sampUK_aligned.fasta  --o
 
 Inspect the index output in the 'aligned' subfolder. 
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - Knowing that the genome size is 29,903 bp, do any samples appear to have more gaps or Ns than you would expect?
 
 ::::
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - At first glance, none appear to have >~3000 gaps or Ns.
 
@@ -385,7 +386,7 @@ augur filter --nthreads 2 --sequences data/aligned/b117_seq_complete_sampUK_alig
 
 Nice, all the sequences passed our quality filters (this is rarer than you might think).
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - Why is it important to remove low quality sequences prior to phylogenetic inference?
 - The choice of maximum 10% ambiguous and gaps seems (*is*) somewhat arbitrary. How would increasing or decreasing this threshold change the analysis?
@@ -393,7 +394,7 @@ Nice, all the sequences passed our quality filters (this is rarer than you might
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - Sequences with excessive gaps or ambiguous sites may not have as high of accuracy, and have less signal to contribute to the tree, which could bias its placement.
 - Increasing the threshold would allow more sequences of lower quality to pass through the filter. Decreasing the threshold is more conservative.
@@ -647,8 +648,9 @@ Validation of 'trees/analysis-package.json' succeeded.
 
 
 
+<a name="visualize-tree-mod5"></a>
 
-### 5. Visualizing the phylodynamic analysis {#visualize-tree}
+### 5. Visualizing the phylodynamic analysis
 
 Now that we've constructed and packaged up a tree (`analysis-package.json`), we can visualize this data alongside the data augur has extracted from our metadata using augur and [Auspice][].
 
@@ -682,7 +684,7 @@ First, let's look at the divergence tree and use the x-axis to work out how many
 
 Now, we can do the same thing if we switch to "TIME" and look at the approximate inferred dates of the internal nodes of the tree. We can also mouse over to get the exact pop-up dates.
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - What was the maximum number of mutations from the root to any tip? 
 - What was the most likely date of the root (AKA the **time of the most recent common ancestor (TMRCA)**) ? Confidence interval?
@@ -691,7 +693,7 @@ Now, we can do the same thing if we switch to "TIME" and look at the approximate
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - 18 (to tip MW598424.1/Ghana/2020-12-22). This tip could be considered a temporal outlier and excluded from the analysis. 
 - 2020-08-21, but the confidence interval is wide and lower bound is unrealistic (2016-05-31 - 2020-09-12)
@@ -705,7 +707,7 @@ Now, have a look at the "CLOCK" layout/figure found in the options bar on the le
 **The root-to-tip regression plot:**
 ![auspice root-to-tip](img/PGE_mod5/auspice_rtt.png)
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - What is the slope of the root-to-tip regression (in subs/year; subs/site/year)? What does it represent?
 - Does the trend line for the root-to-tip regression look like a good fit with good temporal signal?
@@ -715,7 +717,7 @@ Now, have a look at the "CLOCK" layout/figure found in the options bar on the le
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - 14.9 substitutions per year. Or (ignoring masked sites), 14.9/29903=0.0004982778=5.0 subs/site/year. It represents the strict molecular clock rate.
 - Aside from the outlier, it looks like a good fit (an R-squared value should really be reported) with reasonable temporal signal.
@@ -733,7 +735,7 @@ We can colour the tree and rename the tree tip labels using the metadata to refl
 **Here is a look at what you should be seeing in auspice when you change branches to be colored by Country and choose the multi-panel layout.**
 ![auspice phylogeography](img/PGE_mod5/auspice_geo.png)
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - Based on this analysis, where was the root of B.1.1.7 likely to have occurred?
 - How do you think sequence subsampling might have impacted this analysis?
@@ -742,7 +744,7 @@ We can colour the tree and rename the tree tip labels using the metadata to refl
 
 ::::
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - The United Kingdom
 - We included far fewer sequences from the UK than were available, and still inferred it as the likely origin. It would be worth comparing other sampling schemes to validate this, but we have high confidence that this was the likely origin, given the sequences publicly available.
@@ -756,8 +758,9 @@ We can colour the tree and rename the tree tip labels using the metadata to refl
 That's that for our maximum likelihood phylogeographic inference. Now, we're going to compare those results to a Bayesian approach.
 
 
+<a name="delphy-mod5"></a>
 
-### 6. Delphy analysis {#delphy}
+### 6. Delphy analysis
 
 [Delphy](https://delphy.fathom.info/) is a newly released Bayesian phylogenetics tool designed to be fast, scalable, accessible, and accurate. Delphy is faster than other Bayesian tools because it uses Explicit Mutation-Annotated Trees (EMAT), which are hypotheses of how an ancestral sequence replicated and evolved, mutation by mutation, into the observed dated sequences. Check out their [pre-print](https://www.biorxiv.org/content/10.1101/2025.03.25.645253v1.full.pdf) if you want more details.
 
@@ -805,14 +808,14 @@ Before we start the run, go to Customize in the toolbar, then add the metadata f
 **Delphy customize options:**
 ![delphy add metadata](img/PGE_mod5/delphy_cust.png)
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - what biases may we have imposed through our selection of priors?
 
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - We may bias our estimates of the root date by specifying an improper mean molecular clock rate. The skygrid may not fit well with 10 categories (not enough data in early period). The underlying population may be better described by the exponential population distribution. Any misspecified or over-generalized prior has the potential to bias the analysis or underestimate the true uncertainty in the estimates.
 
@@ -827,7 +830,7 @@ Hit play and watch in *statistical awe* as trees sampled from the posterior are 
 
 Although Delphy does not seem very good at estimating the ESS and assessing convergence, a good sign of convergence is when the posterior distributions of parameters appear as "fuzzy caterpillars" (converging around similar values, as opposed to jumping around). 
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - How do you interpret the change in effective population size through time? 
 
@@ -836,7 +839,7 @@ Although Delphy does not seem very good at estimating the ESS and assessing conv
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - The effective population size is low and then increases rapidly (exponentially?) as this lineage transmitted broadly in the UK and globally, but then appears to decrease at the end of the study perio, but this likely reflects lower sampling rate towards the end of the period. 
 
@@ -846,7 +849,7 @@ Although Delphy does not seem very good at estimating the ESS and assessing conv
 
 NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, you can change branch coloring between Credibility and Metadata (Country). You can also change the credibility threshold (posterior support) for nodes'/branches' shading in the tree displayed.
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - Is the first bifurcation at the root well-supported? 
 
@@ -855,7 +858,7 @@ NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, 
 ::::
 
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - No, the credibility threshold is <50%.
 
@@ -865,7 +868,7 @@ NEXT, let's click on Lineages in the upper tool bar. In the bottom left corner, 
 
 And now click on Mutations in the upper tool bar. Click on recurrent mutations, then A17615G. This mutation may have evolved independently multiple times, though it was only found in 70 genomes. It is a non-synonymous mutation in the ORF1b gene, resulting in an amino acid change of Lysine to Arginine (K1383R) in the nsp10 protein. Explore the other mutations that occurred in the phylogeny.
 
-:::: {.callout type="orange" style="regular" title="Questions" collapsible="false" icon="true"}
+:::: {.callout type="orange" title="Questions" collapsible="false"}
 
 - Where does the Delphy analysis suggest the root of this B.1.1.7 phylogeny occurred?
 
@@ -873,7 +876,7 @@ And now click on Mutations in the upper tool bar. Click on recurrent mutations, 
 
 ::::
 
-:::: {.callout type="green" style="regular" title="Answers" collapsible="true" icon="true"}
+:::: {.callout type="green" title="Answers" collapsible="true"}
 
 - The UK
 
@@ -885,13 +888,13 @@ And now click on Mutations in the upper tool bar. Click on recurrent mutations, 
 
 To wrap this Delphy analysis up, go to Customize, then in the bottom left, export the Tree as png and Newick file, and the Delphy run. The Delphy run file can be dropped back into Delphy or read into R. You can also generate input/output to BEAST to run a more *bespoke* Bayesian analysis.
 
+<a name="end-mod5"></a>
 
-
-### 7. End of lab {#end}
+### 7. End of lab 
 
 You've made it to the end of the lab. Awesome job.
 
-:::: {.callout type="orange" style="regular" title="You deserve a *little treat*" collapsible="true" icon="true"}
+:::: {.callout type="orange" title="You deserve a *little treat*" collapsible="true"}
  
 ![treat](img/PGE_mod5/end.png)
 ::::
